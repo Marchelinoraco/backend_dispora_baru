@@ -6,6 +6,9 @@ import database from "./config/Database.js";
 import SequelizeStore from "connect-session-sequelize";
 import UserRoute from "./routes/UserRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
+import BeritaRoute from "./routes/BeritaRoute.js";
+import ProgramRoute from "./routes/ProgramRoute.js";
+import RegProgramRoute from "./routes/RegProgramRoute.js";
 
 dotenv.config();
 
@@ -17,9 +20,9 @@ const store = new sessionStore({
   db: database,
 });
 
-// (async () => {
-//   await database.sync();
-// })();
+(async () => {
+  await database.sync();
+})();
 
 app.use(
   session({
@@ -43,6 +46,9 @@ app.use(
 app.use(express.json());
 app.use(UserRoute);
 app.use(AuthRoute);
+app.use(BeritaRoute);
+app.use(ProgramRoute);
+app.use(RegProgramRoute);
 
 app.get("/", (req, res) => {
   res.send("<h1>BackendDispora</h1>");
