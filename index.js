@@ -6,8 +6,6 @@ import database from "./config/Database.js";
 import SequelizeStore from "connect-session-sequelize";
 import UserRoute from "./routes/UserRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
-import FormRoute from "./routes/FormRoute.js";
-import PurposeRoute from "./routes/PurposeRoute.js";
 
 dotenv.config();
 
@@ -19,9 +17,9 @@ const store = new sessionStore({
   db: database,
 });
 
-(async () => {
-  await database.sync();
-})();
+// (async () => {
+//   await database.sync();
+// })();
 
 app.use(
   session({
@@ -38,18 +36,16 @@ app.use(
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173",
+    origin: "http://localhost:3000",
   })
 );
 
 app.use(express.json());
 app.use(UserRoute);
 app.use(AuthRoute);
-app.use(FormRoute);
-app.use(PurposeRoute);
 
 app.get("/", (req, res) => {
-  res.send("<h1>BackendEKinerja</h1>");
+  res.send("<h1>BackendDispora</h1>");
 });
 
 store.sync();
