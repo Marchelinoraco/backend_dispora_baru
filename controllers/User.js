@@ -4,9 +4,7 @@ import { Op } from "sequelize";
 
 export const getUsers = async (req, res) => {
   try {
-    const response = await User.findAll({
-      attributes: ["uuid", "roleId"],
-    });
+    const response = await User.findAll();
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -28,7 +26,7 @@ export const getUserById = async (req, res) => {
 };
 
 export const createAdmin = async (req, res) => {
-  const { username, password, confirmPassword, role, email, name } = req.body;
+  const { password, confirmPassword, role, email, name } = req.body;
   console.log(password, confirmPassword);
   if (password !== confirmPassword)
     return res
@@ -37,16 +35,34 @@ export const createAdmin = async (req, res) => {
   const hashPassword = await argon2.hash(password);
   try {
     await User.create({
-      username: username,
       email: email,
       name: name,
       password: hashPassword,
-      isActive: true,
+
       role: role,
     });
 
     res.status(201).json({ message: "Pengguna berhasil ditambahkan" });
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+export const deleteAdmin = async (req, res) => {
+  const user = await User.findOne({
+    where: {
+      uuid: req.params.id,
+    },
+  });
+  if (!user) return res.status(404).json({ msg: "Pengguna tidak ditemukan" });
+  try {
+    await User.destroy({
+      where: {
+        id: user.id,
+      },
+    });
+    res.status(200).json({ msg: "Pengguna berhasil dihapus" });
+  } catch (error) {
+    res.status(400).json({ msg: error.message });
   }
 };

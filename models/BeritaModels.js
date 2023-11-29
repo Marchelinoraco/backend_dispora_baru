@@ -4,12 +4,15 @@ import db from "../config/Database.js";
 const { DataTypes } = Sequelize;
 
 const Berita = db.define(
-  "BERITA",
+  "berita",
   {
-    id_berita: {
-      primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
+    uuid: {
+      type: DataTypes.STRING,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
     judul_berita: {
       type: DataTypes.STRING,
@@ -20,6 +23,13 @@ const Berita = db.define(
     },
     isi_berita: {
       type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    tanggal_berita: {
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,

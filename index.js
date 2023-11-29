@@ -9,6 +9,8 @@ import AuthRoute from "./routes/AuthRoute.js";
 import BeritaRoute from "./routes/BeritaRoute.js";
 import ProgramRoute from "./routes/ProgramRoute.js";
 import RegProgramRoute from "./routes/RegProgramRoute.js";
+import FileUpload from "express-fileupload";
+import GaleriRoute from "./routes/GaleriRoute.js";
 
 dotenv.config();
 
@@ -20,9 +22,9 @@ const store = new sessionStore({
   db: database,
 });
 
-(async () => {
-  await database.sync();
-})();
+// (async () => {
+//   await database.sync();
+// })();
 
 app.use(
   session({
@@ -44,11 +46,14 @@ app.use(
 );
 
 app.use(express.json());
+app.use(FileUpload());
+app.use(express.static("public"));
 app.use(UserRoute);
 app.use(AuthRoute);
 app.use(BeritaRoute);
 app.use(ProgramRoute);
 app.use(RegProgramRoute);
+app.use(GaleriRoute);
 
 app.get("/", (req, res) => {
   res.send("<h1>BackendDispora</h1>");

@@ -14,14 +14,7 @@ const User = database.define(
         notEmpty: true,
       },
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        len: [3, 100],
-      },
-    },
+
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -45,13 +38,7 @@ const User = database.define(
         notEmpty: true,
       },
     },
-    isActive: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
+
     role: {
       type: DataTypes.STRING,
       allowNull: false,

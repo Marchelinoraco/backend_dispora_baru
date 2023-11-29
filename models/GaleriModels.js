@@ -2,8 +2,9 @@ import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
 
 const { DataTypes } = Sequelize;
-const Program = db.define(
-  "TabelProgram",
+
+const Galeri = db.define(
+  "galeri",
   {
     uuid: {
       type: DataTypes.STRING,
@@ -13,16 +14,12 @@ const Program = db.define(
         notEmpty: true,
       },
     },
-    nama_program: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    gambar_program: {
-      type: DataTypes.STRING,
-    },
+    gambar: DataTypes.STRING,
     URL: DataTypes.STRING,
   },
-  { freezeTableName: true }
+  {
+    freezeTableName: true,
+  }
 );
 
-export default Program;
+export default Galeri;

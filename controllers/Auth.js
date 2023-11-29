@@ -2,9 +2,11 @@ import User from "../models/UserModel.js";
 import argon2 from "argon2";
 
 export const login = async (req, res) => {
+  if (req.body.email === "")
+    return res.status(404).json({ message: "Email tidak boleh kosong" });
   const user = await User.findOne({
     where: {
-      username: req.body.username,
+      email: req.body.email,
     },
   });
   if (!user)
@@ -14,8 +16,10 @@ export const login = async (req, res) => {
   req.session.userId = user.uuid;
   const uuid = user.uuid;
   const username = user.username;
+  const email = user.email;
+  const password = user.password;
   const role = user.role;
-  res.status(200).json({ uuid, username, role });
+  res.status(200).json({ uuid, username, email, password, role });
 };
 
 export const me = async (req, res) => {
@@ -23,7 +27,7 @@ export const me = async (req, res) => {
     return res.status(401).json({ message: "Mohon masuk ke akun Anda!" });
   }
   const user = await User.findOne({
-    attributes: ["uuid", "username", "role"],
+    attributes: ["uuid", "email", "role"],
     where: {
       uuid: req.session.userId,
     },

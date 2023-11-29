@@ -6,12 +6,14 @@ const { DataTypes } = Sequelize;
 const RegProgram = db.define(
   "TabelRegProgram",
   {
-    id_reg_program: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+    uuid: {
+      type: DataTypes.STRING,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
-    id_program: DataTypes.INTEGER,
     nama_reg: {
       type: DataTypes.STRING,
       allowNull: false,
